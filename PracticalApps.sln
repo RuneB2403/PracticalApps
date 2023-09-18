@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Northwind.Common.EntityModels.Sqlite", "Northwind.Common.EntityModels.Sqlite\Northwind.Common.EntityModels.Sqlite.csproj", "{CFD179B5-E886-4B94-9017-6C1EAF383DFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.DataContext.Sqlite", "Northwind.Common.DataContext.Sqlite\Northwind.Common.DataContext.Sqlite.csproj", "{8638242B-1C49-49E9-9DBC-64DB5AF0393D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.UnitTests", "Northwind.Common.UnitTests\Northwind.Common.UnitTests.csproj", "{3A84657D-C536-4ECD-8F32-234B9B4293FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Mvc", "Northwind.Mvc\Northwind.Mvc.csproj", "{C0E6B01B-1754-4193-A0BE-67517B769D83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFD179B5-E886-4B94-9017-6C1EAF383DFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD179B5-E886-4B94-9017-6C1EAF383DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD179B5-E886-4B94-9017-6C1EAF383DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD179B5-E886-4B94-9017-6C1EAF383DFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8638242B-1C49-49E9-9DBC-64DB5AF0393D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8638242B-1C49-49E9-9DBC-64DB5AF0393D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8638242B-1C49-49E9-9DBC-64DB5AF0393D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8638242B-1C49-49E9-9DBC-64DB5AF0393D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A84657D-C536-4ECD-8F32-234B9B4293FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A84657D-C536-4ECD-8F32-234B9B4293FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A84657D-C536-4ECD-8F32-234B9B4293FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A84657D-C536-4ECD-8F32-234B9B4293FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E6B01B-1754-4193-A0BE-67517B769D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E6B01B-1754-4193-A0BE-67517B769D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E6B01B-1754-4193-A0BE-67517B769D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E6B01B-1754-4193-A0BE-67517B769D83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBFEB307-224C-47B8-BEB6-523E45C54B93}
+	EndGlobalSection
+EndGlobal
