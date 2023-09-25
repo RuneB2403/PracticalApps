@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
 using Packt.Shared;
 using System.Diagnostics;
@@ -16,13 +18,15 @@ namespace Northwind.Mvc.Controllers
             db = injectedContext;
         }
 
-        public IActionResult Index()
+        [ResponseCache(Duration = 10 /* seconds */,
+            Location = ResponseCacheLocation.Any)]
+        public async Task<IActionResult> Index()
         {
             HomeIndexViewModel model = new
             (
             VisitorCount: Random.Shared.Next(1, 1001),
-            Categories: db.Categories.ToList(), 
-            Products: db.Products.ToList()
+            Categories: await db.Categories.ToListAsync(),
+            Products: await db.Products.ToListAsync()
             );
 
             _logger.LogError("This is a serious error (not really!)");
@@ -33,6 +37,8 @@ namespace Northwind.Mvc.Controllers
             return View(model);
         }
 
+        [Route("private")]
+        [Authorize(Roles = "Administrators")]
         public IActionResult Privacy()
         {
             return View();
@@ -43,19 +49,56 @@ namespace Northwind.Mvc.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult ProductDetail(int? id)
+        public async Task<IActionResult> ProductDetail(int? id,
+            string alertstyle = "success")
         {
-            if (!id.HasValue)
+            ViewData["alertstyle"] = alertstyle;
             {
-                return BadRequest("You must pass a product ID in the route, for example, / Home / ProductDetail / 21");
+                if (!id.HasValue)
+                {
+                    return BadRequest("You must pass a product ID in the route, for example, / Home / ProductDetail / 21");
+                }
+                Product? model = await db.Products.SingleOrDefaultAsync(p => p.ProductId == id);
+                if (model is null)
+                {
+                    return NotFound($"ProductId {id} not found.");
+                }
+                return View(model); // pass model to view and then return result
             }
-            Product? model = db.Products.SingleOrDefault(p => p.ProductId == id);
-            if (model is null)
-            {
-                return NotFound($"ProductId {id} not found.");
-            }
-            return View(model); // pass model to view and then return result
+        }
+        public IActionResult ModelBinding()
+        {
+            return View(); // the page with a form to submit
+        }
+        [HttpPost] // use this action method to process POSTs
+        public IActionResult ModelBinding(Thing thing)
+        {
+            HomeModelBindingViewModel model = new(
+                Thing: thing, HasErrors: !ModelState.IsValid,
+                ValidationErrors: ModelState.Values
+                .SelectMany(state => state.Errors)
+                .Select(error => error.ErrorMessage)
+            );
+            return View(model);
         }
 
+        public IActionResult ProductsThatCostMoreThan(decimal? price)
+        {
+            if (!price.HasValue)
+            {
+                return BadRequest("You must pass a product price in the query string, for example, / Home / ProductsThatCostMoreThan ? price = 50");
+            }
+            IEnumerable<Product> model = db.Products
+            .Include(p => p.Category)
+            .Include(p => p.Supplier)
+            .Where(p => p.UnitPrice > price);
+            if (!model.Any())
+            {
+                return NotFound(
+                 $"No products cost more than {price:C}.");
+            }
+            ViewData["MaxPrice"] = price.Value.ToString("C");
+            return View(model); // pass model to view
+        }
     }
 }

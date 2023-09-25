@@ -7,6 +7,7 @@
 <div class="text-center">
  <h1 class="display-4">Welcome</h1>
  <p class="alert alert-primary">@DateTime.Now.ToLongTimeString()</p>
+    <p><a asp-action="ModelBinding" asp-controller="Home">Binding</a></p>
 </div>
 @if (Model is not null)
 {
@@ -73,6 +74,11 @@
         </p>
         @if (Model is not null)
         {
+            <h3>Query products by price</h3>
+            <form asp-action="ProductsThatCostMoreThan" method="GET">
+                <input name="price" placeholder="Enter a product price" />
+                <input type="submit" />
+            </form>
             <h2>Products</h2>
             <div id="product-columns">
                 <ul class="list-group">
